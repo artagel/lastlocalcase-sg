@@ -40,6 +40,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
 
+      - name: Change permissions of state file
+        run: sudo chmod 770 ./terraform/terraform.tfstate
+
       - name: Terraform Init
         id: init
         run: terraform init -input=false
