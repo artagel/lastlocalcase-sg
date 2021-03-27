@@ -78,10 +78,11 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
 
       - name: Push State File
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: s3 cp ./terraform/terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate

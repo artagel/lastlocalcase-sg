@@ -1,4 +1,3 @@
-// Public Repository
 data "aws_route53_zone" "pub_domain_name" {
   name         = var.hosted_zone
   private_zone = false
