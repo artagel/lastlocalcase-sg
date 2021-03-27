@@ -30,7 +30,7 @@ EOF
 }
 
 resource "aws_iam_role" "pub_last_lambda_inv_exec" {
-  name_prefix        = "public-lastlocal-invalidation-policy-"
+  name_prefix        = "public-last-inv-policy-"
   description        = "Managed by Terraform"
   assume_role_policy = <<EOF
 {
