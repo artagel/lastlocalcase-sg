@@ -14,7 +14,6 @@ jobs:
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
-      - uses: ItsKarma/aws-cli@v1.70.0
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -26,11 +25,13 @@ jobs:
         run: terraform fmt -check
 
       - name: Get State File
-        id: pre-init
-        run: aws --region us-east-1 s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate terraform.tfstate
+        uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate terraform.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
         working-directory: ./terraform
 
       - name: Terraform Init
@@ -75,9 +76,11 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Push State File
-        id: post-apply
-        run: aws --region us-east-1 s3 cp terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
+        uses: ItsKarma/aws-cli@v1.70.0
+          with:
+            args: s3 cp terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
         working-directory: ./terraform
