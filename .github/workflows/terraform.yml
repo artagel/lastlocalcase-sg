@@ -12,6 +12,7 @@ jobs:
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
+      - uses: chrislennon/action-aws-cli@v1.1
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -23,7 +24,6 @@ jobs:
         run: terraform fmt -check
 
       - name: Get State File
-        uses: chrislennon/action-aws-cli@v1.1
         id: pre-init
         run: aws --region us-east-1 s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate terraform.tfstate
         working-directory: ./terraform
@@ -70,7 +70,6 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Push State File
-        uses: chrislennon/action-aws-cli@v1.1
         id: post-apply
         run: aws --region us-east-1 s3 cp terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
         working-directory: ./terraform
