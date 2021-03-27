@@ -29,8 +29,8 @@ EOF
 
 }
 
-resource "aws_iam_role" "pub_lambda_invalidation_execution" {
-  name_prefix        = "public-invalidation-policy-"
+resource "aws_iam_role" "pub_lastlocalcase_lambda_invalidation_execution" {
+  name_prefix        = "public-lastlocal-invalidation-policy-"
   description        = "Managed by Terraform"
   assume_role_policy = <<EOF
 {
@@ -55,19 +55,19 @@ EOF
 resource "aws_lambda_function" "pub_s3_invalidation" {
   description      = "Managed by Terraform"
   filename         = "${path.module}/public_invalidation.py.zip"
-  function_name    = "public_invalidation"
-  handler          = "public_invalidation.handler"
+  function_name    = "public_lastlocal_invalidation"
+  handler          = "public_lastlocal_invalidation.handler"
   source_code_hash = data.archive_file.pub_invalidation_zip.output_base64sha256
   publish          = true
   timeout          = 30
-  role             = aws_iam_role.pub_lambda_invalidation_execution.arn
+  role             = aws_iam_role.pub_lastlocalcase_lambda_invalidation_execution.arn
   runtime          = "python3.8"
 
 }
 
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "pub_lambda_invalidation_role"
+  name = "pub_lastlocal_lambda_invalidation_role"
 
   assume_role_policy = <<EOF
 {
