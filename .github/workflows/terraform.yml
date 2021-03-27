@@ -14,7 +14,7 @@ jobs:
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
-      - uses: chrislennon/action-aws-cli@v1.1
+      - uses: ItsKarma/aws-cli@v1.70.0
       - name: Checkout
         uses: actions/checkout@v2
 
