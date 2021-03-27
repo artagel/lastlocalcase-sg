@@ -77,7 +77,7 @@ jobs:
 
       - name: Push State File
         uses: ItsKarma/aws-cli@v1.70.0
-          with:
+        with:
             args: s3 cp terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
