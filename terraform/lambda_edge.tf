@@ -53,7 +53,7 @@ EOF
 
 resource "aws_lambda_function" "pub_folder_index_redirect" {
   description      = "Managed by Terraform"
-  filename         = "${path.module}/public-index-redirect.js.zip"
+  filename         = "${path.module}/public-last-index-redirect.js.zip"
   function_name    = "public-last-index-redirect"
   handler          = "public-last-index-redirect.handler"
   source_code_hash = data.archive_file.pub_index_redirect_zip.output_base64sha256
