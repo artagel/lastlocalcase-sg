@@ -64,9 +64,9 @@ resource "aws_s3_bucket_public_access_block" "pub_s3_bucket_pub_policy" {
 resource "aws_s3_bucket_object" "pub_repo_html" {
   for_each      = fileset("files/html/", "**/*")
   bucket        = var.pub_domain_name
-  key           = replace(each.value, "../../html/public/", "")
-  source        = "../../html/public/${each.value}"
-  etag          = filemd5("../../html/public/${each.value}")
+  key           = replace(each.value, "files/html/", "")
+  source        = "files/html/${each.value}"
+  etag          = filemd5("files/html/${each.value}")
   content_type = "text/html; charset=UTF-8"
 }
 
