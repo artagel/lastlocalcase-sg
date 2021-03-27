@@ -1,11 +1,11 @@
 data "archive_file" "pub_index_redirect_zip" {
   type        = "zip"
-  output_path = "${path.module}/public-last-index-redirect.js.zip"
-  source_file = "${path.module}/lambda_edge/public-last-index-redirect.js"
+  output_path = "${path.module}/pub-last-index-redirect.js.zip"
+  source_file = "${path.module}/lambda_edge/pub-last-index-redirect.js"
 }
 
 resource "aws_iam_role_policy" "pub_lambda_execution" {
-  name_prefix = "public-last-lambda-policy-"
+  name_prefix = "pub-last-lambda-policy-"
   role        = aws_iam_role.pub_lambda_execution.id
 
   policy = <<EOF
@@ -28,7 +28,7 @@ EOF
 }
 
 resource "aws_iam_role" "pub_lambda_execution" {
-  name_prefix        = "public-last-lambda-policy-"
+  name_prefix        = "pub-last-lambda-policy-"
   description        = "Managed by Terraform"
   assume_role_policy = <<EOF
 {
@@ -53,9 +53,9 @@ EOF
 
 resource "aws_lambda_function" "pub_folder_index_redirect" {
   description      = "Managed by Terraform"
-  filename         = "${path.module}/public-last-index-redirect.js.zip"
-  function_name    = "public-last-index-redirect"
-  handler          = "public-last-index-redirect.handler"
+  filename         = "${path.module}/pub-last-index-redirect.js.zip"
+  function_name    = "pub-last-index-redirect"
+  handler          = "pub-last-index-redirect.handler"
   source_code_hash = data.archive_file.pub_index_redirect_zip.output_base64sha256
   provider         = aws.aws_cloudfront
   publish          = true
