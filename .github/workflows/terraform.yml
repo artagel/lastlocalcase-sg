@@ -47,7 +47,6 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'pull_request'
         run: terraform plan -no-color -out tfapply
         continue-on-error: true
         working-directory: ./terraform
