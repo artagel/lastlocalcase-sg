@@ -1,7 +1,5 @@
 variable "aws_region" {
   default     = "us-east-1"
-  prod_prefix = "prod"
-  dev_prefix  = "dev"
   description = "AWS Region to host S3 site"
   type        = string
 }
