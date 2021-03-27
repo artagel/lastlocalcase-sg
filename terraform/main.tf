@@ -8,5 +8,9 @@ terraform {
 
 provider "aws" {
   region = var.aws_region.region
+}
+
+provider "aws" {
+  region = var.aws_region.region
   alias  = "aws_cloudfront"
 }
