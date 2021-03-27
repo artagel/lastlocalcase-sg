@@ -6,7 +6,7 @@ data "archive_file" "pub_invalidation_zip" {
 
 resource "aws_iam_role_policy" "pub_lambda_invalidation_execution" {
   name_prefix = "public-invalidation-policy-"
-  role        = aws_iam_role.pub_lambda_invalidation_execution.id
+  role        = aws_iam_role.pub_last_lambda_inv_exec.id
 
   policy = <<EOF
 {
@@ -29,7 +29,7 @@ EOF
 
 }
 
-resource "aws_iam_role" "pub_lastlocalcase_lambda_invalidation_execution" {
+resource "aws_iam_role" "pub_last_lambda_inv_exec" {
   name_prefix        = "public-lastlocal-invalidation-policy-"
   description        = "Managed by Terraform"
   assume_role_policy = <<EOF
@@ -60,7 +60,7 @@ resource "aws_lambda_function" "pub_s3_invalidation" {
   source_code_hash = data.archive_file.pub_invalidation_zip.output_base64sha256
   publish          = true
   timeout          = 30
-  role             = aws_iam_role.pub_lastlocalcase_lambda_invalidation_execution.arn
+  role             = aws_iam_role.pub_last_lambda_inv_exec.arn
   runtime          = "python3.8"
 
 }
