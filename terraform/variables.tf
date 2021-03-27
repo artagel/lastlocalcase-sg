@@ -10,6 +10,12 @@ variable "pub_domain_name" {
   type        = string
 }
 
+variable "pub_www_domain_name" {
+  default = "www.lastlocalcase.sg"
+  description = "FQDN of cloudfront alias for the website"
+  type        = string
+}
+
 variable "hosted_zone" {
   default = "lastlocalcase.sg"
   description = "Root domain of website"

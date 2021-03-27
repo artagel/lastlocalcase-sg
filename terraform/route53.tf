@@ -21,6 +21,24 @@ resource "aws_route53_record" "pub_route53_record" {
   }
 }
 
+resource "aws_route53_record" "pub_www_route53_record" {
+  depends_on = [
+    aws_cloudfront_distribution.pub_s3_distribution,
+  ]
+
+  zone_id = data.aws_route53_zone.pub_domain_name.zone_id
+  name    = var.pub_www_domain_name
+  type    = "A"
+
+  alias {
+    name    = aws_cloudfront_distribution.pub_s3_distribution.domain_name
+    zone_id = aws_cloudfront_distribution.pub_s3_distribution.hosted_zone_id
+
+    //HardCoded value for CloudFront
+    evaluate_target_health = false
+  }
+}
+
 resource "aws_route53_record" "pub_cert_validation" {
   provider = aws.aws_cloudfront
   allow_overwrite = true
