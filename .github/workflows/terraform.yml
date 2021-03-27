@@ -27,12 +27,11 @@ jobs:
       - name: Get State File
         uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate terraform.tfstate
+          args: s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate ./terraform/terraform.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
-        working-directory: ./terraform
 
       - name: Terraform Init
         id: init
@@ -78,9 +77,8 @@ jobs:
       - name: Push State File
         uses: ItsKarma/aws-cli@v1.70.0
         with:
-            args: s3 cp terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
+            args: s3 cp ./terraform/terraform.tfstate s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: "us-east-1"
-        working-directory: ./terraform
