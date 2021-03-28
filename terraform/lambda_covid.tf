@@ -14,6 +14,13 @@ resource "aws_iam_role_policy" "pub_lambda_covid" {
       ],
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "s3:*"
+        ],
+        "Resource": "arn:aws:s3:::*"
     }
   ]
 }
