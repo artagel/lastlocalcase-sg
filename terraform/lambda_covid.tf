@@ -1,9 +1,3 @@
-resource "null_resource" "pub_covid_scraper_zip" {
-  provisioner "local-exec" {
-    command = "zip -ur ./covid_scraper.py.zip ./lambda/covid_scraper/*"
-  }
-}
-
 resource "aws_iam_role_policy" "pub_lambda_covid" {
   name_prefix = "pub-lambda-covid-policy-"
   role        = aws_iam_role.pub_lambda_covid.id
