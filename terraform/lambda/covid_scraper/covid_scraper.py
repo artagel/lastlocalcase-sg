@@ -9,7 +9,7 @@ from collections import OrderedDict
 updates_url = 'https://www.moh.gov.sg/covid-19/past-updates'
 
 
-def upload_file(file_name, bucket, object_name=None):
+def upload_file(file_data, file_name, bucket, object_name=None):
     """Upload a file to an S3 bucket
 
     :param file_name: File to upload
@@ -25,11 +25,13 @@ def upload_file(file_name, bucket, object_name=None):
     # Upload the file
     s3_client = boto3.client('s3')
     try:
-        response = s3_client.upload_file(file_name, bucket, object_name)
+        response = s3_client.put_object(Body=file_data, Bucket=bucket, Key=object_name)
+
     except ClientError as e:
         print(e)
         return False
     return True
+
 
 def find_streak(cases):
     firststreak = 0
@@ -104,6 +106,6 @@ def handler(event, context):
                     num = 1
                     break
     casedict = find_streak(casedict)
-    with open('../cases.json', 'w') as f:
-        f.write(json.dumps(casedict, indent=4))
-    upload_file('../cases.json', 'lastlocalcase.sg')
+    c = json.dumps(casedict, indent=4)
+    file_name = 'cases.json'
+    upload_file(c, file_name, 'lastlocalcase.sg')
