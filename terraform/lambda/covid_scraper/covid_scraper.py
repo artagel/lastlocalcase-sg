@@ -98,7 +98,7 @@ def handler(event, context):
                             if case_str.isdigit():
                                 cases = int(case_str)
                     if cases != None and thedate != None:
-                        if not thedate.strftime('%d %b %Y') in casedict.keys():
+                        if not thedate.strftime('%d %b %Y') in casedict['cases'].keys():
                             print(f'Adding {thedate.strftime("%d %b %Y")} {cases}')
                             casedict['cases'][thedate.strftime('%d %b %Y')] = cases
                     num = 1
