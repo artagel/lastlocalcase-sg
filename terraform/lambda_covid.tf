@@ -78,15 +78,15 @@ resource "aws_cloudwatch_event_rule" "every_one_hour" {
 }
 
 resource "aws_cloudwatch_event_target" "check_covid_every_one_hour" {
-  rule      = "${aws_cloudwatch_event_rule.every_one_hour.name}"
+  rule      = aws_cloudwatch_event_rule.every_one_hour.name
   target_id = "lambda"
-  arn       = "${aws_lambda_function.pub_covid_scraper.arn}"
+  arn       = aws_lambda_function.pub_covid_scraper.arn
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_covid" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.pub_covid_scraper.function_name}"
+  function_name = aws_lambda_function.pub_covid_scraper.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_event_rule.every_one_hour.arn}"
+  source_arn    = aws_cloudwatch_event_rule.every_one_hour.arn
 }
