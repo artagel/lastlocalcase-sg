@@ -1,7 +1,7 @@
-data "archive_file" "pub_covid_scraper_zip" {
-  type        = "zip"
-  output_path = "${path.module}/covid_scraper.py.zip"
-  source_dir = "${path.module}/lambda/covid_scraper"
+resource "null_resource" "pub_covid_scraper_zip" {
+  provisioner "local-exec" {
+    command = "zip -ur ./covid_scraper.py.zip /lambda/covid_scraper/*"
+  }
 }
 
 resource "aws_iam_role_policy" "pub_lambda_covid" {
@@ -55,7 +55,6 @@ resource "aws_lambda_function" "pub_covid_scraper" {
   filename         = "${path.module}/covid_scraper.py.zip"
   function_name    = "covid_scraper"
   handler          = "covid_scraper.handler"
-  source_code_hash = data.archive_file.pub_covid_scraper_zip.output_base64sha256
   publish          = true
   timeout          = 30
   role             = aws_iam_role.pub_lambda_covid.arn
