@@ -1,6 +1,6 @@
 resource "null_resource" "pub_covid_scraper_zip" {
   provisioner "local-exec" {
-    command = "zip -ur ./covid_scraper.py.zip /lambda/covid_scraper/*"
+    command = "zip -ur ./covid_scraper.py.zip ./lambda/covid_scraper/*"
   }
 }
 
