@@ -1,7 +1,7 @@
 data "archive_file" "pub_covid_scraper_zip" {
   type        = "zip"
   output_path = "${path.module}/covid_scraper.py.zip"
-  source_file = "${path.module}/lambda/covid_scraper.py"
+  source_dir = "${path.module}/lambda/covid_scraper"
 }
 
 resource "aws_iam_role_policy" "pub_lambda_covid" {

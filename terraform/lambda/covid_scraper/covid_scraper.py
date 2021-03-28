@@ -104,6 +104,6 @@ def handler(event, context):
                     num = 1
                     break
     casedict = find_streak(casedict)
-    with open('cases.json', 'w') as f:
+    with open('../cases.json', 'w') as f:
         f.write(json.dumps(casedict, indent=4))
-    upload_file('cases.json', 'lastlocalcase.sg')
+    upload_file('../cases.json', 'lastlocalcase.sg')
