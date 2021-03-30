@@ -54,7 +54,7 @@ EOF
 
 resource "aws_lambda_function" "pub_s3_invalidation" {
   description      = "Managed by Terraform"
-  filename         = "${path.module}/public_invalidation.py.zip"
+  filename         = "${path.module}/public_lastlocal_invalidation.py.zip"
   function_name    = "public_lastlocal_invalidation"
   handler          = "public_lastlocal_invalidation.handler"
   source_code_hash = data.archive_file.pub_invalidation_zip.output_base64sha256
