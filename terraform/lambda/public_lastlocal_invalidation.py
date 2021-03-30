@@ -2,7 +2,7 @@ import boto3
 import time
 import os
 
-def handle_s3_change(event, context):
+def handler(event, context):
     paths = []
     for items in event["Records"]:
         key = items["s3"]["object"]["key"]
