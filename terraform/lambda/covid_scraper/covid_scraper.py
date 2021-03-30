@@ -45,9 +45,9 @@ def find_streak(cases):
         count = cases['cases'][casedate]
         if count == 0 and on_to_the_second == False:
             firststreak += 1
-            firstend = casedate
+            firststart = casedate
             if firststreak == 1:
-                firststart = casedate
+                firstend = casedate
         elif count > 0:
             if secondstreak > 0:
                 break
@@ -55,9 +55,9 @@ def find_streak(cases):
             continue
         elif count == 0 and firststreak > 0:
             secondstreak += 1
-            secondend = casedate
+            secondstart = casedate
             if secondstreak == 1:
-                secondstart = casedate
+                secondend = casedate
         else:
             break
     cases['first_streak'] = firststreak
