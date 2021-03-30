@@ -25,7 +25,7 @@
               success: function (result) {
                 var date = new Date(result['first_start'])
                 date.setDate( date.getDate() - 1 );
-                var formattedDate = moment().format('DD MMM YYYY');
+                var formattedDate = moment(date).format('DD MMM YYYY');
                 $( "#first_streak" ).text(result['first_streak'])
                 $( "#first_start" ).text(formattedDate)
                 $( "#second_streak" ).text(result['second_streak'])
