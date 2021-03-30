@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
 
     <title>Last Local COVID-19 Case - Singapore</title>
   </head>
@@ -22,8 +23,11 @@
               url: "/cases.json",
               dataType: "json",
               success: function (result) {
+                var date = new Date(result['first_start'])
+                date.setDate( date.getDate() - 1 );
+                var formattedDate = moment().format('DD MMM YYYY');
                 $( "#first_streak" ).text(result['first_streak'])
-                $( "#first_start" ).text(result['first_start'])
+                $( "#first_start" ).text(formattedDate)
                 $( "#second_streak" ).text(result['second_streak'])
                 $( "#second_start" ).text(result['second_start'])
                 $( "#second_end" ).text(result['second_end'])
