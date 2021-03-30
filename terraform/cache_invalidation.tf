@@ -1,7 +1,7 @@
 data "archive_file" "pub_invalidation_zip" {
   type        = "zip"
-  output_path = "${path.module}/public_invalidation.py.zip"
-  source_file = "${path.module}/lambda/public_invalidation.py"
+  output_path = "${path.module}/public_lastlocal_invalidation.py.zip"
+  source_file = "${path.module}/lambda/public_lastlocal_invalidation.py"
 }
 
 resource "aws_iam_role_policy" "pub_lambda_invalidation_execution" {
