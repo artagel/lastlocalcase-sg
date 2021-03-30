@@ -17,7 +17,7 @@
        <script type="text/javascript" language="javascript" class="init">
           $(document).ready(function() {
             $.ajax({
-              url: "/lastlocalcase-sg/files/html/cases.json",
+              url: "/cases.json",
               success: function (result) {
                 $( "#first_streak" ).text(result['first_streak'])
                 $( "#first_start" ).text(result['first_start'])
