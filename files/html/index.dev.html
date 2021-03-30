@@ -18,6 +18,7 @@
           $(document).ready(function() {
             $.ajax({
               url: "/cases.json",
+              dataType: "json",
               success: function (result) {
                 $( "#first_streak" ).text(result['first_streak'])
                 $( "#first_start" ).text(result['first_start'])
