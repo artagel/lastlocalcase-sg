@@ -20,7 +20,7 @@ def handle_s3_change(event, context):
         'CallerReference': str(time.time())
     }
     invalidation = client.create_invalidation(
-        DistributionId=os.environ['CLOUDFRONT_DISTRIBUTION_ID'],
+        DistributionId="E3INA79U1U2Q7W",
         InvalidationBatch=batch,
     )
     return batch
