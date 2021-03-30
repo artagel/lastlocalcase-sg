@@ -1,15 +1,53 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-    code { background-color: #eee; }
-</style>
-<title>Last Local COVID-19 Case - Singapore</title>
-</head>
-<body>
-<h1>Last Local COVID-19 Case in Singapore</h1>
-<p>It has been XXX days since the last local COVID-19 case in Singapore.</p>
-<p>The last local case was detected on XXX</p>
-</body>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Singapore's last local COVID-19 case, the current streak of no cases, and previous streaks.">
+    <meta name="keywords" content="COVID, COVID-19, Singapore, Local Cases, Locally Transmitted Cases, Streak">
+    <meta name="author" content="Dan Gericke">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>Last Local COVID-19 Case - Singapore</title>
+  </head>
+  <body>
+       <script type="text/javascript" language="javascript" class="init">
+          $(document).ready(function() {
+            $.ajax({
+              url: "/cases.json",
+              dataType: "json",
+              success: function (result) {
+                $( "#first_streak" ).text(result['first_streak'])
+                $( "#first_start" ).text(result['first_start'])
+                $( "#second_streak" ).text(result['second_streak'])
+                $( "#second_start" ).text(result['second_start'])
+                $( "#second_end" ).text(result['second_end'])
+              }
+            });
+          });
+    </script>
+    <div class="container">
+      <br>
+      <div class="jumbotron text-center">
+          <h1>Days Since the Last<br>
+          COVID-19 Case - Singapore</h1>
+          <h2>
+            <span id="first_streak"></span>
+            <br />
+            <span id=""></span>
+          </h2>
+        <p>The last local case was detected on <span id="first_start"></span></p>
+        <hr>
+        <p>
+          The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span> until <span id="second_end"></span>.
+        </p>
+      </div>
+      <a href="https://github.com/artagel/lastlocalcase-sg"><img src="download.png" height="168" width="300" alt="Github Source"/></a>
+    </div>
+  </body>
 </html>
