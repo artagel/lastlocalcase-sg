@@ -23,9 +23,13 @@
               url: "/cases.json",
               dataType: "json",
               success: function (result) {
-                var date = new Date(result['first_start'])
-                date.setDate( date.getDate() - 1 );
-                var formattedDate = moment(date).format('DD MMM YYYY');
+                if (result['first_start'] === null) {
+                  var formattedDate = result['first_end']
+                } else {
+                  var date = new Date(result['first_start'])
+                  date.setDate(date.getDate() - 1);
+                  var formattedDate = moment(date).format('DD MMM YYYY');
+                }
                 $( "#first_streak" ).text(result['first_streak'])
                 $( "#first_start" ).text(formattedDate)
                 $( "#second_streak" ).text(result['second_streak'])
@@ -45,7 +49,7 @@
             <br />
             <span id=""></span>
           </h2>
-        <p>The last local case was detected on <span id="first_start"></span></p>
+        <p>The last local case was detected on <span id="first_start"></span>.</p>
         <hr>
         <p>
           The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span> until <span id="second_end"></span>.
