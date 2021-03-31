@@ -51,9 +51,11 @@ def find_streak(cases):
         elif count > 0:
             if secondstreak > 0:
                 break
+            if firststreak == 0:
+                firstend = casedate
             on_to_the_second = True
             continue
-        elif count == 0 and firststreak > 0:
+        elif count == 0 and firstend:
             secondstreak += 1
             secondstart = casedate
             if secondstreak == 1:
@@ -108,4 +110,7 @@ def handler(event, context):
     casedict = find_streak(casedict)
     c = json.dumps(casedict, indent=4)
     file_name = 'cases.json'
-    upload_file(c, file_name, 'lastlocalcase.sg')
+    print(c)
+    # upload_file(c, file_name, 'lastlocalcase.sg')
+
+handler('a', 'a')
