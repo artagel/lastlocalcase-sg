@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Singapore's last local COVID-19 case, the current streak of number of cases, and previous streaks.">
+    <meta name="keywords" content="COVID, COVID-19, Singapore, Local Cases, Locally Transmitted Cases, Streak">
+    <meta name="author" content="Dan Gericke">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <title>Last Local COVID-19 Case - Singapore - About</title>
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <div class="text-center">
+        <a href="index.html">Main</a> | <a href="about.html">About</a> | <a href="history.html">History</a>
+      </div>
+      <div class="jumbotron">
+        <p>
+          I created this page because I like streaks.  In Singapore, we receive daily WhatsApp messages and it can be hard to tell how many days we've gone without a case, so I created this page so I could have an easy place to see that information.  All data is sourced from the <a href="https://www.moh.gov.sg/covid-19/past-updates">Ministry of Health COVID-19 site</a>.
+        </p>
+        <p>
+          Some endpoints you can access:
+        <ul>
+          <li><a href="/text">https://lastlocalcase.sg/text</a> - A text based response with only the number of days since the last case.</li>
+          <li><a href="/json">https://lastlocalcase.sg/json</a> - A lightweight JSON response with the number of days since the last case and when the last case was detected.</li>
+          <li><a href="/cases.json">https://lastlocalcase.sg/cases.json</a> - The raw JSON data used to populate the data on the site.</li>
+        </ul>
+        </p>
+      </div>
+      <div class="text-center">
+          <a href="https://github.com/artagel/lastlocalcase-sg"><img src="download.png" height="56" width="100" alt="Github Source"/></a>
+      </div>
+    </div>
+  </body>
+</html>
