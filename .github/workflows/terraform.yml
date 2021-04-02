@@ -17,6 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Zip up the Covid Lambda
+        id: zip
+        run: zip -ur ../../covid_scraper.py.zip .
+        working-directory: ./terraform/lambda/covid_scraper
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
