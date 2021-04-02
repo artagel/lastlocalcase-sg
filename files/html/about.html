@@ -14,45 +14,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://momentjs.com/downloads/moment.js"></script>
 
-    <title>Last Local COVID-19 Case - Singapore</title>
+    <title>Last Local COVID-19 Case - Singapore - About</title>
   </head>
   <body>
-       <script type="text/javascript" language="javascript" class="init">
-          $(document).ready(function() {
-            $.ajax({
-              url: "/cases.json",
-              dataType: "json",
-              success: function (result) {
-                if (result['first_start'] === null) {
-                  var formattedDate = result['first_end']
-                } else {
-                  var date = new Date(result['first_start'])
-                  date.setDate(date.getDate() - 1);
-                  var formattedDate = moment(date).format('DD MMM YYYY');
-                }
-                $( "#first_streak" ).text(result['first_streak'])
-                $( "#first_start" ).text(formattedDate)
-                $( "#second_streak" ).text(result['second_streak'])
-                $( "#second_start" ).text(result['second_start'])
-                $( "#second_end" ).text(result['second_end'])
-              }
-            });
-          });
-    </script>
     <div class="container">
       <br>
-      <div class="jumbotron text-center">
-          <h1>Days Since the Last<br>
-          COVID-19 Case - Singapore</h1>
-          <h2>
-            <span id="first_streak"></span>
-            <br />
-            <span id=""></span>
-          </h2>
-        <p>The last local case was detected on <span id="first_start"></span>.</p>
-        <hr>
+      <div class="text-center">
+        <a href="index.html">Main</a> | <a href="about.html">About</a> | <a href="history.html">History</a>
+      </div>
+      <div class="jumbotron">
         <p>
-          The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span> until <span id="second_end"></span>.
+          I created this page because I like streaks.  In Singapore, we receive daily WhatsApp messages and it can be hard to tell how many days we've gone without a case, so I created this page so I could have an easy place to see that information.  All data is sourced from the <a href="https://www.moh.gov.sg/covid-19/past-updates">Ministry of Health COVID-19 site</a>.
+        </p>
+        <p>
+          Some endpoints you can access:
+        <ul>
+          <li><a href="/text">https://lastlocalcase.sg/text</a> - A text based response with only the number of days since the last case.</li>
+          <li><a href="/json">https://lastlocalcase.sg/json</a> - A lightweight JSON response with the number of days since the last case and when the last case was detected.</li>
+          <li><a href="/cases.json">https://lastlocalcase.sg/cases.json</a> - The raw JSON data used to populate the data on the site.</li>
+        </ul>
         </p>
       </div>
       <div class="text-center">
