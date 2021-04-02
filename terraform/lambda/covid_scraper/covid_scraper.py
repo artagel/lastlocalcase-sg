@@ -138,11 +138,8 @@ def handler(event, context):
     base_json = {'streak': casedict['first_streak'],
                 'streak_start': casedict['first_end'] if casedict['first_streak'] == 0 else casedict['first_start']}
     base_json_txt = json.dumps(base_json, indent=4)
-    print(c)
-    print(base_json_txt)
-    # file_name = 'cases.json'
-    # upload_file(c, file_name, 'lastlocalcase.sg')
-    # upload_file(casedict['first_streak'], 'text', 'lastlocalcase.sg')
-    # upload_file(base_json_txt, 'json', 'lastlocalcase.sg')
+    file_name = 'cases.json'
+    upload_file(c, file_name, 'lastlocalcase.sg')
+    upload_file(casedict['first_streak'], 'text', 'lastlocalcase.sg')
+    upload_file(base_json_txt, 'json', 'lastlocalcase.sg')
 
-handler('a','b')
