@@ -142,6 +142,6 @@ def handler(event, context):
     base_json_txt = json.dumps(base_json, indent=4)
     file_name = 'cases.json'
     upload_file(c, file_name, 'lastlocalcase.sg')
-    upload_file(casedict['first_streak'], 'text', 'lastlocalcase.sg')
+    upload_file(str(casedict['first_streak']), 'text', 'lastlocalcase.sg')
     upload_file(base_json_txt, 'json', 'lastlocalcase.sg')
 
