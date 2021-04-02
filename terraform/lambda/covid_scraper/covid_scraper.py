@@ -4,6 +4,7 @@ from botocore.exceptions import ClientError
 from bs4 import BeautifulSoup
 import datetime
 import json
+import pytz
 from collections import OrderedDict
 
 updates_url = 'https://www.moh.gov.sg/covid-19/past-updates'
@@ -134,6 +135,7 @@ def handler(event, context):
                     break
     casedict = find_streak(casedict)
     casedict = find_all_streaks(casedict)
+    casedict['lastupdated'] = datetime.datetime.now(pytz.timezone('Asia/Singapore')).strftime("%d %b %Y %H:%M:%S UTC+8")
     c = json.dumps(casedict, indent=4)
     base_json = {'streak': casedict['first_streak'],
                 'streak_start': casedict['first_end'] if casedict['first_streak'] == 0 else casedict['first_start']}

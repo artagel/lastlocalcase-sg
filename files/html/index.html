@@ -35,6 +35,7 @@
                 $( "#second_streak" ).text(result['second_streak'])
                 $( "#second_start" ).text(result['second_start'])
                 $( "#second_end" ).text(result['second_end'])
+                $( "#update_time" ).text(result['lastupdated'])
               }
             });
           });
@@ -57,6 +58,8 @@
         <hr>
         <p>
           The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span> until <span id="second_end"></span>.
+          <br />
+          Last update: <span id="update_time"></span>
         </p>
       </div>
       <div class="text-center">
