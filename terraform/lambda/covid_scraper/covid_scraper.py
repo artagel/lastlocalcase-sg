@@ -70,11 +70,33 @@ def find_streak(cases):
     cases['second_end'] = secondend
     return cases
 
+def find_all_streaks(cases):
+    streak = 0
+    streak_start = None
+    streak_end = None
+    for casedate in cases['cases']:
+        count = cases['cases'][casedate]
+        if count == 0:
+            streak += 1
+            streak_start = casedate
+            if streak == 1:
+                streak_end = casedate
+        if count > 0:
+            if streak == 0:
+                continue
+            cases['streaks'].append({'streak': streak, 'streak_start': streak_start, 'streak_end': streak_end})
+            streak = 0
+            streak_start = None
+            streak_end = None
+            continue
+    return cases
+
 
 def handler(event, context):
     casedict = OrderedDict()
     casedict['cases'] = OrderedDict()
-    r = requests.get('https://www.moh.gov.sg/covid-19/past-updates')
+    casedict['streaks'] = []
+    r = requests.get(updates_url)
     if r.status_code == 200:
         soup = BeautifulSoup(r.content, "html.parser")
         tables = soup.find_all("table")
@@ -86,7 +108,10 @@ def handler(event, context):
                 num = 1
                 cases = None
                 for col in cols:
-                    data = col.span.text.strip()
+                    try:
+                        data = col.span.text.strip()
+                    except Exception as e:
+                        continue
                     if num == 1:
                         try:
                             thedate = datetime.datetime.strptime(data, '%d %b %Y')
@@ -108,6 +133,16 @@ def handler(event, context):
                     num = 1
                     break
     casedict = find_streak(casedict)
+    casedict = find_all_streaks(casedict)
     c = json.dumps(casedict, indent=4)
-    file_name = 'cases.json'
-    upload_file(c, file_name, 'lastlocalcase.sg')
+    base_json = {'streak': casedict['first_streak'],
+                'streak_start': casedict['first_end'] if casedict['first_streak'] == 0 else casedict['first_start']}
+    base_json_txt = json.dumps(base_json, indent=4)
+    print(c)
+    print(base_json_txt)
+    # file_name = 'cases.json'
+    # upload_file(c, file_name, 'lastlocalcase.sg')
+    # upload_file(casedict['first_streak'], 'text', 'lastlocalcase.sg')
+    # upload_file(base_json_txt, 'json', 'lastlocalcase.sg')
+
+handler('a','b')
