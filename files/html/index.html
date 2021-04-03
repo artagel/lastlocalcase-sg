@@ -1,70 +1,190 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Singapore's last local COVID-19 case, the current streak of number of cases, and previous streaks.">
+    <meta name="description"
+          content="Singapore's last local COVID-19 case, the current streak of number of cases, and previous streaks.">
     <meta name="keywords" content="COVID, COVID-19, Singapore, Local Cases, Locally Transmitted Cases, Streak">
     <meta name="author" content="Dan Gericke">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@0.2.1"></script>
 
     <title>Last Local COVID-19 Case - Singapore</title>
-  </head>
-  <body>
-       <script type="text/javascript" language="javascript" class="init">
-          $(document).ready(function() {
-            $.ajax({
-              url: "/cases.json",
-              dataType: "json",
-              success: function (result) {
-                if (result['first_start'] === null) {
-                  var formattedDate = result['first_end']
-                } else {
-                  var date = new Date(result['first_start'])
-                  date.setDate(date.getDate() - 1);
-                  var formattedDate = moment(date).format('DD MMM YYYY');
+</head>
+<body>
+<script type="text/javascript" language="javascript" class="init">
+    $(document).ready(function () {
+        $.ajax({
+            url: "/cases.json",
+            dataType: "json",
+            success: function (result) {
+                var streakhistory = {
+                    datasets: [{
+                        data: result['streaks'].reverse(),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)'
+                    }]
                 }
-                $( "#first_streak" ).text(result['first_streak'])
-                $( "#first_start" ).text(formattedDate)
-                $( "#second_streak" ).text(result['second_streak'])
-                $( "#second_start" ).text(result['second_start'])
-                $( "#second_end" ).text(result['second_end'])
-                $( "#update_time" ).text(result['lastupdated'])
-              }
-            });
-          });
-    </script>
-    <div class="container">
-      <br />
-      <div class="text-center">
+                var casedata = [];
+                $.map(result['cases'], function (value, key) {
+                    casedata.push({'date': moment(key, 'DD MMM YYYY').toISOString(), 'cases': value})
+                });
+                var casehistory = {
+                    datasets: [{
+                        data: casedata.reverse(),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)'
+                    }]
+                }
+                if (result['first_start'] === null) {
+                    var formattedDate = result['first_end']
+                } else {
+                    var date = new Date(result['first_start'])
+                    date.setDate(date.getDate() - 1);
+                    var formattedDate = moment(date).format('DD MMM YYYY');
+                }
+                $("#first_streak").text(result['first_streak'])
+                $("#first_start").text(formattedDate)
+                $("#second_streak").text(result['second_streak'])
+                $("#second_start").text(result['second_start'])
+                $("#second_end").text(result['second_end'])
+                $("#update_time").text(result['lastupdated'])
+                var ctx = document.getElementById('streakhistory');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: streakhistory,
+                    options: {
+                        responsive: true,
+                        parsing: {
+                            xAxisKey: 'streak_end',
+                            yAxisKey: 'streak'
+                        },
+                        scales: {
+                            x: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Last Day of Streak'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Days in Streak'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'History of Streaks'
+                            }
+                        }
+                    },
+                });
+                var ctxx = document.getElementById('casehistory');
+                var myChartx = new Chart(ctxx, {
+                    type: 'line',
+                    data: casehistory,
+                    options: {
+                        responsive: true,
+                        parsing: {
+                            xAxisKey: 'date',
+                            yAxisKey: 'cases'
+                        },
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'month',
+                                    tooltipFormat: 'dd LLL yyyy',
+                                    displayFormats: {
+                                        month: 'dd LLL yyyy'
+                                    }
+                                },
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Cases'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'History of Local Cases'
+                            }
+                        }
+                    },
+                });
+            }
+        });
+    });
+</script>
+<div class="container">
+    <br/>
+    <div class="text-center">
         <a href="index.html">Main</a> | <a href="about.html">About</a> | <a href="history.html">History</a>
-      </div>
-      <div class="jumbotron text-center">
+    </div>
+    <div class="jumbotron text-center">
 
-          <h1>Days Since the Last<br>
-          COVID-19 Case - Singapore</h1>
-          <h2>
+        <h1>Last Local Case - Singapore</h1>
+        <h2>
             <span id="first_streak"></span>
-            <br />
+            <br/>
             <span id=""></span>
-          </h2>
+        </h2>
         <p>The last local case was detected on <span id="first_start"></span>.</p>
         <hr>
         <p>
-          The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span> until <span id="second_end"></span>.
-          <br />
-          Last update: <span id="update_time"></span>
+            The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span>
+            until <span id="second_end"></span>.
+            <br/>
+        <div>
+            <canvas id="streakhistory" width="200" height="200"></canvas>
+            <br/>
+            <canvas id="casehistory" width="200" height="200"></canvas>
+        </div>
+        <br/><br/>
+        <p>Last update: <span id="update_time"></span></p>
         </p>
-      </div>
-      <div class="text-center">
-          <a href="https://github.com/artagel/lastlocalcase-sg"><img src="download.png" height="56" width="100" alt="Github Source"/><br />View the code</a>
-      </div>
     </div>
-  </body>
+    <div class="text-center">
+        <a href="https://github.com/artagel/lastlocalcase-sg"><img src="download.png" height="56" width="100"
+                                                                   alt="Github Source"/><br/>View the code</a>
+    </div>
+</div>
+</body>
 </html>
