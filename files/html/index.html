@@ -44,6 +44,8 @@
                 $.map(result['cases'], function (value, key) {
                     casedata.push({'date': moment(key, 'DD MMM YYYY').toISOString(), 'cases': value})
                 });
+                var cases_today = casedata[0].cases;
+                console.log(cases_today);
                 var casehistory = {
                     datasets: [{
                         data: casedata.reverse(),
@@ -64,6 +66,7 @@
                 $("#second_start").text(result['second_start'])
                 $("#second_end").text(result['second_end'])
                 $("#update_time").text(result['lastupdated'])
+                $("#cases_today").text(cases_today)
                 var ctx = document.getElementById('streakhistory');
                 var myChart = new Chart(ctx, {
                     type: 'line',
@@ -162,15 +165,33 @@
     <div class="jumbotron text-center">
 
         <h1>Last Local Case - Singapore</h1>
-        <h2>
-            <span id="first_streak"></span>
-            <br/>
-            <span id=""></span>
-        </h2>
-        <p>The last local case was detected on <span id="first_start"></span>.</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Current Streak</th>
+                <th>Cases Today</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h2>
+                        <span id="first_streak"></span>
+                        <br/>
+                    </h2>
+                </td>
+                <td>
+                    <h2>
+                        <span id="cases_today"></span>
+                        <br/>
+                    </h2></td>
+            </tr>
+            </tbody>
+        </table>
         <hr>
         <p>
-            The previous streak was <b><span id="second_streak"></span> days</b> from <span id="second_start"></span>
+            The previous streak was <b><span id="second_streak"></span> days</b> from <span
+                id="second_start"></span>
             until <span id="second_end"></span>.
             <br/>
         <div>
