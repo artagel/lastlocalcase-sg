@@ -121,7 +121,7 @@ def handler(event, context):
                         num += 1
                         continue
                     if num == 2:
-                        if 'locally transmitted covid-19 infection' in data.lower():
+                        if 'locally transmitted covid-19 infection' in data.lower() or 'locally transmitted infection' in data.lower():
                             case_str = data.lower().split(' ')[0]
                             if case_str == 'no':
                                 cases = 0
