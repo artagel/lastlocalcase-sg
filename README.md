@@ -1,6 +1,9 @@
 # lastlocalcase-sg - Last Local COVID-19 Case in Singapore
 A webpage showing the number of days since the last local COVID-19 case in Singapore.
 
+**This project is no longer supported as Singapore is no longer aiming for 0 cases.**  
+
+
 ## Why did I make this?
 I simply made it because I like streaks and there wasn't a easy place I could find that told me how many days we've had in Singapore since our last COVID-19 case.
 
