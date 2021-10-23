@@ -37,7 +37,6 @@ jobs:
         run: terraform fmt -check
 
       - name: Get State File
-        uses: ItsKarma/aws-cli@v1.70.0
         with:
           args: s3 cp s3://sg-lastlocalcase-artifact-bucket/sg-lastlocalcase.tfstate ./terraform/terraform.tfstate
         env:
